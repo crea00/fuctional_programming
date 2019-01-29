@@ -10,7 +10,7 @@
 <script>
 
 /**
- *  순수 함수
+ *  순수 함수 (Pure Function)
  */
 
 function add(a, b) {
@@ -62,18 +62,57 @@ console.log( obj1.val );
 console.log( obj2.val );
 
 
-/*
- * 일급 함수 
+/**
+ * 일급 함수 (First-class Function)
  * 
+ *  - The language supports passing functions as arguments to other functions
+ *    returning them as the values from other functions,
+ *    and assigning them to variables or storing them in data structures.
  */
+
+var f1 = function(a) { return a * a; };
+console.log(f1);
+
+var f2 = add;
+console.log(f2);
+
+function f3(f) {
+  return f();
+}
+
+console.log( f3(function() { return 10; }) );
+console.log( f3(function() { return 20; }) );
+
+// 일급함수의 개념과 순수함수라는 특징을 이용해서 함수의 조합성을 높여나가는 것이 함수형 프로그래밍
 
 
 /* add_maker */
 
+function add_maker(a) {
+  return function(b) {
+    return a + b;
+  }
+}
+
+var add10 = add_maker(10);
+console.log( add10(20) );
+
+var add5 = add_maker(5);
+var add15 = add_maker(15);
+
+console.log( add5(10) );
+console.log( add15(10) );
 
 
+function f4(f1, f2, f3) {
+  return f3(f1() + f2());
+}
 
-
+console.log(
+  f4(
+    function() { return 2; },
+    function() { return 1; },
+    function(a) { return a * a; }));
 
 
 </script>
