@@ -138,8 +138,56 @@ _map([1, 2, 3, 4], function(v) {
 })
 
 
+// 3. 커링
+  // 1. _curry, _curryr
+function _curry(fn) {
+  return function(a, b) {
+    return arguments.length == 2
+      ? fn(a, b)
+      : function(b) { return fn(a, b); };
+  }
+}
+
+function _curryr(fn) {
+  return function(a, b) {
+    return arguments.length == 2
+      ? fn(a, b)
+      : function(b) { return fn(b, a); };
+  }
+}
+
+var add = _curry(function(a, b) {
+  return a + b;
+});
+
+var add10 = add(10);
+var add5 = add(5);
+console.log( add10(5) );
+console.log( add(5)(3) );
+console.log( add5(3) );
+console.log( add(10)(3) );
+
+console.log( add(1, 2) );
+
+var sub = _curryr(function(a, b) {
+  return a - b;
+});
+
+console.log( sub(10, 5) );
+
+var sub10 = sub(10);
+console.log( sub10(5) );
 
 
+  // 2. _get 만들어서 좀 더 간단하게 하기
+  
+// 4. _reduce 만들기
+
+// 5. 파이프라인 만들기
+  // 1. _pipe
+  // 2. _go
+  // 3. users에 _go 적용
+  // 4. 화살표 함수 간단히
 
 
 </script>
