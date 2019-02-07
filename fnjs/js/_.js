@@ -85,3 +85,13 @@ function _each(list, iter) {
 
 var _map = _curryr(_map),
   _filter = _curryr(_filter);
+
+var _values = _map(_identity);
+
+function _identity(val) {
+  return val;
+}
+
+function _pluck(data, key) {
+  return _map(data, _get(key));
+}
