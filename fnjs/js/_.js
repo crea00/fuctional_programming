@@ -76,9 +76,8 @@ var _length = _get('length');
 
 function _each(list, iter) {
   var keys = _keys(list);
-
-  for(var i = 0, len = keys.length; i < len; i++) {
-    iter(list[keys[i]]);
+  for (var i = 0, len = keys.length; i < len; i++) {
+    iter(list[keys[i]], keys[i]);
   }
   return list;
 }
@@ -105,5 +104,29 @@ function _negate(func) {
 function _reject(data, predi) {
   return _filter(data, _negate(predi));
 }
-
 var _compact = _filter(_identity);
+
+var _find = _curryr(function(list, predi) {
+  var keys = _keys(list);
+  for (var i = 0, len = keys.length; i < len; i++) {
+    var val = list[keys[i]];
+    if (predi(val)) return val;
+  }
+});
+
+var _find_index = _curryr(function _find_index(list, predi) {
+  var keys = _keys(list);
+  for (var i = 0, len = keys.length; i < len; i++) {
+    if (predi(list[keys[i]])) return i;
+  }
+  return -1;
+});
+
+function _some(data, predi) {
+  return _find_index(data, predi || _identity) != -1;
+}
+
+function _every(data, predi) {
+  return _find_index(data, _negate(predi || _identity)) == -1;
+}
+
